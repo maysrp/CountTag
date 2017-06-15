@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>add</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+	<script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="row" style="margin: 20px;">
+			<div class="col-md-6">
+				<div class="input-group">
+					<input type="text" name="name" class="form-control name">
+					<div class="input-group-btn">
+						<button class="add btn btn-info">添加</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row info">
+			<div class="panel panel-success">
+				<div class="panel-heading">
+					标签
+				</div>
+				<div class="panel-body">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript">
+	$(".add").click(function(){
+		var name=$(".name").val();
+		if(name){
+			$.ajax({
+				url:'tag.php?name='+name,
+				success:function(data){
+					$(".name").val("");
+					add(data);
+				}
+			})
+		}
+	})
+	$(document).keypress(function(e) {  
+		if(e.which == 13) {  
+			$(".add").click();  
+		}  
+	});
+	function add(data){
+		$(".panel-body").html("");
+		for(x in data){
+			var info=$("<span class='btn btn-info btn-sm' style='margin:10px;'>"+data[x].name+" <span class='badge'>"+data[x].count+"</span></span>");
+			info.appendTo(".panel-body");
+		}
+	}
+
+</script>
+</body>
+</html>
